@@ -1,0 +1,1319 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     50441,       1311]
+NotebookOptionsPosition[     47323,       1247]
+NotebookOutlinePosition[     47690,       1263]
+CellTagsIndexPosition[     47647,       1260]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{"<<", "\"\<mechanisms`\>\""}]], "Input",
+ CellChangeTimes->{{3.793529484814755*^9, 3.793529494377954*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"42925612-75e8-4605-b3cf-8c7d55cd53b8"],
+
+Cell[BoxData["\<\"C compilation failed. Using MVM code instead.\"\>"], "Print",
+ CellChangeTimes->{
+  3.793529500359745*^9, 3.794298862724415*^9, 3.79430562706282*^9, 
+   3.7943167691072273`*^9, 3.7943180688537407`*^9, 3.794319105691146*^9, {
+   3.794911375708769*^9, 3.7949114041825447`*^9}},
+ CellLabel->
+  "During evaluation of \
+In[1]:=",ExpressionUUID->"c8296f2c-a96f-4112-8888-ae13048ccfe2"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Defining Functions", "Section",
+ CellChangeTimes->{{3.7911149065492353`*^9, 
+  3.791114913624703*^9}},ExpressionUUID->"c8f8ce76-2512-4ce3-a210-\
+0f9bafef1087"],
+
+Cell[CellGroupData[{
+
+Cell["Creating objects", "Subsection",
+ CellChangeTimes->{{3.790700539613221*^9, 
+  3.790700541429757*^9}},ExpressionUUID->"673a6995-ee5d-4fba-a6e9-\
+b8574d94681a"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"swelledUnitCell", "[", 
+   RowBox[{"height_", ",", "spacing_", ",", "displacement_"}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"tempAngle", ",", "tempUnitCell"}], "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"tempUnitCell", "=", 
+      RowBox[{"framework", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"0", ",", 
+            RowBox[{"-", "height"}]}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "displacement"}], ",", "0"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", "height"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"-", "displacement"}], "+", "spacing"}], ",", "0"}], 
+           "}"}]}], "}"}], ",", "\[IndentingNewLine]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Property", "[", 
+           RowBox[{
+            RowBox[{"spring", "[", 
+             RowBox[{"{", 
+              RowBox[{"1", ",", "2"}], "}"}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"\"\<stiffness\>\"", "\[Rule]", "beamStiffness"}], ",", 
+              
+              RowBox[{"MeshCellStyle", "\[Rule]", "Black"}]}], "}"}]}], "]"}],
+           ",", "\[IndentingNewLine]", 
+          RowBox[{"Property", "[", 
+           RowBox[{
+            RowBox[{"spring", "[", 
+             RowBox[{"{", 
+              RowBox[{"2", ",", "3"}], "}"}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"\"\<stiffness\>\"", "\[Rule]", "beamStiffness"}], ",", 
+              
+              RowBox[{"MeshCellStyle", "\[Rule]", "Black"}]}], "}"}]}], "]"}],
+           ",", "\[IndentingNewLine]", 
+          RowBox[{"Property", "[", 
+           RowBox[{
+            RowBox[{"spring", "[", 
+             RowBox[{"{", 
+              RowBox[{"2", ",", "4"}], "}"}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"\"\<stiffness\>\"", "\[Rule]", "springStiffness"}], 
+              ",", 
+              RowBox[{"MeshCellStyle", "\[Rule]", "Blue"}]}], "}"}]}], "]"}], 
+          ",", "\[IndentingNewLine]", 
+          RowBox[{"joint", "[", "1", "]"}], ",", 
+          RowBox[{"joint", "[", "3", "]"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"Property", "[", 
+           RowBox[{
+            RowBox[{"angleJoint", "[", 
+             RowBox[{"{", 
+              RowBox[{"1", ",", "2", ",", "3"}], "}"}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{
+              "\"\<angularStiffness\>\"", "\[Rule]", "torsionalStiffness"}], 
+              ",", 
+              RowBox[{"\"\<angle\>\"", "\[Rule]", "restingAngle"}]}], "}"}]}],
+            "]"}]}], "}"}], ",", "\[IndentingNewLine]", 
+        RowBox[{"MeshCellLabel", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{"0", "\[Rule]", "\"\<Index\>\""}], "}"}]}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"tempAngle", "=", 
+      RowBox[{"First", "[", 
+       RowBox[{"turningAngle", "[", 
+        RowBox[{
+         RowBox[{"mechanismPositions", "[", "tempUnitCell", "]"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"{", 
+           RowBox[{"1", ",", "2", ",", "3"}], "}"}], "}"}]}], "]"}], "]"}]}], 
+     ";", "\[IndentingNewLine]", 
+     RowBox[{"tempUnitCell", "/.", " ", 
+      RowBox[{"restingAngle", "\[Rule]", "tempAngle"}]}]}]}], 
+   "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.790699514063249*^9, 3.790699663003118*^9}, {
+   3.790699717569325*^9, 3.7906997429127903`*^9}, {3.7906999244216022`*^9, 
+   3.7906999579860783`*^9}, {3.7907000302807293`*^9, 3.790700030586892*^9}, {
+   3.79070028191807*^9, 3.7907003074748096`*^9}, 3.790700348007374*^9, 
+   3.790700444804102*^9, 3.790700490050561*^9, 3.790700549002921*^9, 
+   3.790701040609232*^9, 3.790701086793482*^9},
+ CellLabel->"In[2]:=",ExpressionUUID->"91af1a37-2eba-4b07-8bcf-b120dcccc641"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"unswelledUnitCell", "[", 
+   RowBox[{"height_", ",", "spacing_"}], "]"}], ":=", "\[IndentingNewLine]", 
+  RowBox[{"framework", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"0", ",", 
+        RowBox[{"-", "height"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "height"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"spacing", ",", "0"}], "}"}]}], "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Property", "[", 
+       RowBox[{
+        RowBox[{"spring", "[", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "2"}], "}"}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"\"\<stiffness\>\"", "\[Rule]", "beamStiffness"}], ",", 
+          RowBox[{"MeshCellStyle", "\[Rule]", "Black"}]}], "}"}]}], "]"}], 
+      ",", "\[IndentingNewLine]", 
+      RowBox[{"Property", "[", 
+       RowBox[{
+        RowBox[{"spring", "[", 
+         RowBox[{"{", 
+          RowBox[{"2", ",", "3"}], "}"}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"\"\<stiffness\>\"", "\[Rule]", "beamStiffness"}], ",", 
+          RowBox[{"MeshCellStyle", "\[Rule]", "Black"}]}], "}"}]}], "]"}], 
+      ",", "\[IndentingNewLine]", 
+      RowBox[{"Property", "[", 
+       RowBox[{
+        RowBox[{"spring", "[", 
+         RowBox[{"{", 
+          RowBox[{"2", ",", "4"}], "}"}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"\"\<stiffness\>\"", "\[Rule]", "springStiffness"}], ",", 
+          RowBox[{"MeshCellStyle", "\[Rule]", "Blue"}]}], "}"}]}], "]"}], ",",
+       "\[IndentingNewLine]", 
+      RowBox[{"joint", "[", "1", "]"}], ",", 
+      RowBox[{"joint", "[", "3", "]"}]}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"MeshCellLabel", "\[Rule]", 
+     RowBox[{"{", 
+      RowBox[{"0", "\[Rule]", "\"\<Index\>\""}], "}"}]}]}], "]"}]}]], "Input",\
+
+ InitializationCell->True,
+ CellChangeTimes->{3.7907010406093273`*^9, 3.790701086793577*^9},
+ CellLabel->"In[3]:=",ExpressionUUID->"e4d141c9-9dc0-429a-b5a8-aea9b019f09a"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"swelledChain", "[", 
+   RowBox[{"height_", ",", "spacing_", ",", "displacement_", ",", "length_"}],
+    "]"}], ":=", 
+  RowBox[{"deleteVertices", "[", 
+   RowBox[{
+    RowBox[{"tesselateMechanism", "[", 
+     RowBox[{
+      RowBox[{"swelledUnitCell", "[", 
+       RowBox[{"height", ",", "spacing", ",", "displacement"}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"spacing", ",", "0"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0"}], "}"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"length", ",", "1"}], "}"}]}], "\[IndentingNewLine]", "]"}], 
+    ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"3", "length"}], "+", "1"}], "}"}]}], "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.790594451719798*^9, 3.790594487131999*^9}, {
+   3.790594588154213*^9, 3.790594625478581*^9}, {3.790594760043985*^9, 
+   3.7905947874485693`*^9}, 3.790701040609405*^9, 3.7907010867936583`*^9},
+ CellLabel->"In[4]:=",ExpressionUUID->"355ac7cd-ca54-46cb-aca5-86a124a23501"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"unswelledChain", "[", 
+   RowBox[{"height_", ",", "spacing_", ",", "length_"}], "]"}], ":=", 
+  RowBox[{"deleteVertices", "[", 
+   RowBox[{
+    RowBox[{"tesselateMechanism", "[", 
+     RowBox[{
+      RowBox[{"unswelledUnitCell", "[", 
+       RowBox[{"height", ",", "spacing"}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"spacing", ",", "0"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0"}], "}"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"length", ",", "1"}], "}"}]}], "\[IndentingNewLine]", "]"}], 
+    ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"3", "length"}], "+", "1"}], "}"}]}], "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.790594451719798*^9, 3.790594487131999*^9}, {
+   3.790594588154213*^9, 3.790594625478581*^9}, {3.790594760043985*^9, 
+   3.7905947874485693`*^9}, 3.790701040609482*^9, 3.790701086793745*^9, 
+   3.790706831726605*^9},
+ CellLabel->"In[5]:=",ExpressionUUID->"8104518c-54ef-4212-921f-a969ee86aeeb"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"flipFlop", "[", 
+   RowBox[{"height_", ",", "width_"}], "]"}], ":=", 
+  RowBox[{"framework", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"width", ",", "0"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"width", "/", "2"}], ",", 
+        RowBox[{"height", "/", "4"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", 
+        RowBox[{"height", "/", "2"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"width", ",", 
+        RowBox[{"height", "/", "2"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"width", "/", "2"}], ",", 
+        RowBox[{"3", 
+         RowBox[{"height", "/", "4"}]}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "height"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"width", ",", "height"}], "}"}]}], "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Property", "[", 
+       RowBox[{
+        RowBox[{"rigidBar", "[", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "2"}], "}"}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"MeshCellStyle", "\[Rule]", "Red"}], " ", "}"}]}], "]"}], 
+      ",", "\[IndentingNewLine]", 
+      RowBox[{"Property", "[", 
+       RowBox[{
+        RowBox[{"rigidBar", "[", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "3"}], "}"}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"MeshCellStyle", "\[Rule]", "Red"}], " ", "}"}]}], "]"}], 
+      ",", "\[IndentingNewLine]", 
+      RowBox[{"Property", "[", 
+       RowBox[{
+        RowBox[{"rigidBar", "[", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "4"}], "}"}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"MeshCellStyle", "\[Rule]", "Red"}], " ", "}"}]}], "]"}], 
+      ",", "\[IndentingNewLine]", 
+      RowBox[{"Property", "[", 
+       RowBox[{
+        RowBox[{"rigidBar", "[", 
+         RowBox[{"{", 
+          RowBox[{"2", ",", "3"}], "}"}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"MeshCellStyle", "\[Rule]", "Red"}], " ", "}"}]}], "]"}], 
+      ",", "\[IndentingNewLine]", 
+      RowBox[{"Property", "[", 
+       RowBox[{
+        RowBox[{"rigidBar", "[", 
+         RowBox[{"{", 
+          RowBox[{"2", ",", "5"}], "}"}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"MeshCellStyle", "\[Rule]", "Red"}], " ", "}"}]}], "]"}], 
+      ",", "\[IndentingNewLine]", 
+      RowBox[{"Property", "[", 
+       RowBox[{
+        RowBox[{"rigidBar", "[", 
+         RowBox[{"{", 
+          RowBox[{"3", ",", "6"}], "}"}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"MeshCellStyle", "\[Rule]", "Red"}], " ", "}"}]}], "]"}], 
+      ",", "\[IndentingNewLine]", 
+      RowBox[{"Property", "[", 
+       RowBox[{
+        RowBox[{"rigidBar", "[", 
+         RowBox[{"{", 
+          RowBox[{"4", ",", "5"}], "}"}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"MeshCellStyle", "\[Rule]", "Red"}], " ", "}"}]}], "]"}], 
+      ",", "\[IndentingNewLine]", 
+      RowBox[{"Property", "[", 
+       RowBox[{
+        RowBox[{"rigidBar", "[", 
+         RowBox[{"{", 
+          RowBox[{"4", ",", "7"}], "}"}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"MeshCellStyle", "\[Rule]", "Red"}], " ", "}"}]}], "]"}], 
+      ",", "\[IndentingNewLine]", 
+      RowBox[{"Property", "[", 
+       RowBox[{
+        RowBox[{"rigidBar", "[", 
+         RowBox[{"{", 
+          RowBox[{"5", ",", "8"}], "}"}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"MeshCellStyle", "\[Rule]", "Red"}], " ", "}"}]}], "]"}], 
+      ",", "\[IndentingNewLine]", 
+      RowBox[{"Property", "[", 
+       RowBox[{
+        RowBox[{"rigidBar", "[", 
+         RowBox[{"{", 
+          RowBox[{"6", ",", "7"}], "}"}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"MeshCellStyle", "\[Rule]", "Red"}], " ", "}"}]}], "]"}], 
+      ",", "\[IndentingNewLine]", 
+      RowBox[{"Property", "[", 
+       RowBox[{
+        RowBox[{"rigidBar", "[", 
+         RowBox[{"{", 
+          RowBox[{"6", ",", "8"}], "}"}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"MeshCellStyle", "\[Rule]", "Red"}], " ", "}"}]}], "]"}], 
+      ",", "\[IndentingNewLine]", 
+      RowBox[{"Property", "[", 
+       RowBox[{
+        RowBox[{"rigidBar", "[", 
+         RowBox[{"{", 
+          RowBox[{"7", ",", "8"}], "}"}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"MeshCellStyle", "\[Rule]", "Red"}], " ", "}"}]}], "]"}], 
+      ",", "\[IndentingNewLine]", 
+      RowBox[{"joint", "[", "4", "]"}], ",", 
+      RowBox[{"joint", "[", "5", "]"}]}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"MeshCellLabel", "\[Rule]", 
+     RowBox[{"{", 
+      RowBox[{"0", "\[Rule]", "\"\<Index\>\""}], "}"}]}]}], 
+   "\[IndentingNewLine]", "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.790595134791007*^9, 3.7905951858131933`*^9}, {
+   3.790595311350566*^9, 3.7905955901579943`*^9}, {3.790595721659234*^9, 
+   3.790595737976988*^9}, {3.7906065609079847`*^9, 3.7906065648508253`*^9}, 
+   3.79061443655156*^9},
+ CellLabel->"In[6]:=",ExpressionUUID->"0ee1f869-498a-4c36-b445-553f66e62ad7"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"verticalUnitCell", "[", 
+   RowBox[{"height_", ",", "spacing_", ",", "displacement_"}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"tempAngle", ",", "tempUnitCell"}], "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"tempUnitCell", "=", 
+      RowBox[{"framework", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "height"}], ",", "0"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", "displacement"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"height", ",", "0"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", 
+            RowBox[{"displacement", "+", "spacing"}]}], "}"}]}], "}"}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Property", "[", 
+           RowBox[{
+            RowBox[{"spring", "[", 
+             RowBox[{"{", 
+              RowBox[{"1", ",", "2"}], "}"}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"\"\<stiffness\>\"", "\[Rule]", "beamStiffness"}], ",", 
+              
+              RowBox[{"MeshCellStyle", "\[Rule]", "Black"}]}], "}"}]}], "]"}],
+           ",", "\[IndentingNewLine]", 
+          RowBox[{"Property", "[", 
+           RowBox[{
+            RowBox[{"spring", "[", 
+             RowBox[{"{", 
+              RowBox[{"2", ",", "3"}], "}"}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"\"\<stiffness\>\"", "\[Rule]", "beamStiffness"}], ",", 
+              
+              RowBox[{"MeshCellStyle", "\[Rule]", "Black"}]}], "}"}]}], "]"}],
+           ",", "\[IndentingNewLine]", 
+          RowBox[{"Property", "[", 
+           RowBox[{
+            RowBox[{"spring", "[", 
+             RowBox[{"{", 
+              RowBox[{"2", ",", "4"}], "}"}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"\"\<stiffness\>\"", "\[Rule]", "springStiffness"}], 
+              ",", 
+              RowBox[{"MeshCellStyle", "\[Rule]", "Blue"}]}], "}"}]}], "]"}], 
+          ",", "\[IndentingNewLine]", 
+          RowBox[{"joint", "[", "1", "]"}], ",", 
+          RowBox[{"joint", "[", "3", "]"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"Property", "[", 
+           RowBox[{
+            RowBox[{"angleJoint", "[", 
+             RowBox[{"{", 
+              RowBox[{"1", ",", "2", ",", "3"}], "}"}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{
+              "\"\<angularStiffness\>\"", "\[Rule]", "torsionalStiffness"}], 
+              ",", 
+              RowBox[{"\"\<angle\>\"", "\[Rule]", "restingAngle"}]}], "}"}]}],
+            "]"}]}], "}"}], ",", "\[IndentingNewLine]", 
+        RowBox[{"MeshCellLabel", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{"0", "\[Rule]", "\"\<Index\>\""}], "}"}]}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"tempAngle", "=", 
+      RowBox[{"First", "[", 
+       RowBox[{"turningAngle", "[", 
+        RowBox[{
+         RowBox[{"mechanismPositions", "[", "tempUnitCell", "]"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"{", 
+           RowBox[{"1", ",", "2", ",", "3"}], "}"}], "}"}]}], "]"}], "]"}]}], 
+     ";", "\[IndentingNewLine]", 
+     RowBox[{"tempUnitCell", "/.", " ", 
+      RowBox[{"restingAngle", "\[Rule]", "tempAngle"}]}]}]}], 
+   "]"}]}]], "Input",
+ InitializationCell->
+  True,ExpressionUUID->"a0e39270-502f-4b3f-adc6-01931989a511"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"verticalChain", "[", 
+   RowBox[{"height_", ",", "spacing_", ",", "displacement_", ",", "length_"}],
+    "]"}], ":=", 
+  RowBox[{"deleteVertices", "[", 
+   RowBox[{
+    RowBox[{"tesselateMechanism", "[", 
+     RowBox[{
+      RowBox[{"verticalUnitCell", "[", 
+       RowBox[{"height", ",", "spacing", ",", "displacement"}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "spacing"}], "}"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"1", ",", "length"}], "}"}]}], "\[IndentingNewLine]", "]"}], 
+    ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"3", "length"}], "+", "1"}], "}"}]}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"verticalChain", "[", 
+  RowBox[{"2", ",", "2", ",", 
+   RowBox[{"1", "/", "4"}], ",", "3"}], "]"}]}], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.794911453916325*^9, 3.794911462713744*^9}},
+ CellLabel->"In[21]:=",ExpressionUUID->"be86f023-732d-4cff-8bdc-ec93820dc9de"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Modifying objects", "Subsection",
+ CellChangeTimes->{{3.7907010113630533`*^9, 
+  3.790701013326128*^9}},ExpressionUUID->"afa5d830-e36d-498a-8611-\
+c2ceb257fd9a"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"removeBeam", "[", 
+   RowBox[{"chain_", ",", "n_"}], "]"}], ":=", "\[IndentingNewLine]", 
+  RowBox[{"deleteVertices", "[", 
+   RowBox[{"chain", ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"3", "n"}], ",", 
+      RowBox[{
+       RowBox[{"3", "n"}], "-", "1"}], ",", 
+      RowBox[{
+       RowBox[{"3", "n"}], "-", "2"}]}], "}"}]}], "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.7905959071150513`*^9, 3.7905959729514914`*^9}},
+ CellLabel->"In[7]:=",ExpressionUUID->"5b6751b5-c420-4292-b25a-49555594198c"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"insertFlipFlop", "[", 
+   RowBox[{
+   "chain_", ",", "height_", ",", "spacing_", ",", "displacement_", ",", 
+    "location_"}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"temp1", ",", "temp2"}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"temp1", "=", 
+      RowBox[{"removeBeam", "[", 
+       RowBox[{"chain", ",", "location"}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"temp2", "=", 
+      RowBox[{"joinMechanism", "[", 
+       RowBox[{"temp1", ",", "\[IndentingNewLine]", 
+        RowBox[{"framework", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"location", "-", "1"}], ")"}], "*", "spacing"}], "-",
+                "displacement"}], ",", "0"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"location", "-", "1"}], ")"}], "*", "spacing"}], "-",
+                "displacement", "+", 
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"2", "/", "3"}], ")"}], "*", "spacing"}]}], ",", 
+              "0"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"location", "+", "1"}], ")"}], "*", "spacing"}], "-",
+                "displacement", "-", 
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"2", "/", "3"}], ")"}], "*", "spacing"}]}], ",", 
+              "0"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"location", "+", "1"}], ")"}], "*", "spacing"}], "-",
+                "displacement"}], ",", "0"}], "}"}]}], "}"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Property", "[", 
+             RowBox[{
+              RowBox[{"rigidBar", "[", 
+               RowBox[{"{", 
+                RowBox[{"1", ",", "2"}], "}"}], "]"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"MeshCellStyle", "\[Rule]", "Red"}], " ", "}"}]}], 
+             "]"}], ",", "\[IndentingNewLine]", 
+            RowBox[{"Property", "[", 
+             RowBox[{
+              RowBox[{"rigidBar", "[", 
+               RowBox[{"{", 
+                RowBox[{"3", ",", "4"}], "}"}], "]"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"MeshCellStyle", "\[Rule]", "Red"}], " ", "}"}]}], 
+             "]"}]}], "}"}], ",", 
+          RowBox[{"MeshCellLabel", "\[Rule]", 
+           RowBox[{"{", 
+            RowBox[{"0", "\[Rule]", "\"\<Index\>\""}], "}"}]}]}], "]"}]}], 
+       "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"joinMechanism", "[", 
+      RowBox[{"temp2", ",", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"#", "+", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"spacing", "*", 
+              RowBox[{"(", 
+               RowBox[{"location", "-", "1"}], ")"}]}], "-", "displacement", 
+             "+", 
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{"2", "/", "3"}], ")"}], "*", "spacing"}]}], ",", 
+            RowBox[{
+             RowBox[{"-", "height"}], "*", "2"}]}], "}"}]}], "&"}], "/@", 
+        RowBox[{"flipFlop", "[", 
+         RowBox[{
+          RowBox[{"height", "*", "2"}], ",", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"2", "/", "3"}], ")"}], "*", "spacing"}]}], "]"}]}]}], 
+      "]"}]}]}], "\[IndentingNewLine]", "]"}]}]], "Input",
+ InitializationCell->True,
+ CellLabel->"In[8]:=",ExpressionUUID->"95dc440e-2ee8-44ad-9c96-a5b73c313705"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"joinFlipFlopTL", "[", 
+   RowBox[{
+   "chain_", ",", "height_", ",", "spacing_", ",", "displacement_", ",", 
+    "length_"}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", "temp1", "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"temp1", "=", 
+      RowBox[{"joinMechanism", "[", 
+       RowBox[{"chain", ",", 
+        RowBox[{"framework", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"length", "*", "spacing"}], "-", "displacement"}], ",",
+               "0"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"length", "*", "spacing"}], "-", "displacement", "+", 
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"2", "/", "3"}], ")"}], "*", "spacing"}]}], ",", 
+              "0"}], "}"}]}], "}"}], ",", " ", "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{"Property", "[", 
+            RowBox[{
+             RowBox[{"rigidBar", "[", 
+              RowBox[{"{", 
+               RowBox[{"1", ",", "2"}], "}"}], "]"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"MeshCellStyle", "\[Rule]", "Red"}], " ", "}"}]}], 
+            "]"}], "}"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"MeshCellLabel", "\[Rule]", 
+           RowBox[{"{", 
+            RowBox[{"0", "\[Rule]", "\"\<Index\>\""}], "}"}]}]}], "]"}]}], 
+       "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"joinMechanism", "[", 
+      RowBox[{"temp1", ",", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"#", "+", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"spacing", "*", "length"}], "-", "displacement", "+", 
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{"2", "/", "3"}], ")"}], "*", "spacing"}]}], ",", 
+            RowBox[{
+             RowBox[{"-", "height"}], "*", "2"}]}], "}"}]}], "&"}], "/@", 
+        RowBox[{"flipFlop", "[", 
+         RowBox[{
+          RowBox[{"height", "*", "2"}], ",", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"2", "/", "3"}], ")"}], "*", "spacing"}]}], "]"}]}]}], 
+      "]"}]}]}], "\[IndentingNewLine]", "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.7906066877131968`*^9, 3.7906070078844433`*^9}, {
+   3.7906071379934*^9, 3.7906071403043737`*^9}, {3.790607282830393*^9, 
+   3.790607283075742*^9}, {3.794318047596788*^9, 3.79431804907513*^9}, 
+   3.794319084307371*^9},
+ CellLabel->"In[9]:=",ExpressionUUID->"36b5f5cb-fdf4-4ae6-b677-0e1cc5b9c7cd"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"joinFlipFlopTR", "[", 
+   RowBox[{
+   "chain_", ",", "height_", ",", "spacing_", ",", "displacement_", ",", 
+    "length_"}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", "temp1", "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"temp1", "=", 
+      RowBox[{"joinMechanism", "[", 
+       RowBox[{"chain", ",", 
+        RowBox[{"framework", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"spacing", "-", "displacement"}], ",", "0"}], "}"}], 
+            ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"spacing", "-", "displacement", "-", 
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"2", "/", "3"}], ")"}], "*", "spacing"}]}], ",", 
+              "0"}], "}"}]}], "}"}], ",", " ", "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{"Property", "[", 
+            RowBox[{
+             RowBox[{"rigidBar", "[", 
+              RowBox[{"{", 
+               RowBox[{"1", ",", "2"}], "}"}], "]"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"MeshCellStyle", "\[Rule]", "Red"}], " ", "}"}]}], 
+            "]"}], "}"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"MeshCellLabel", "\[Rule]", 
+           RowBox[{"{", 
+            RowBox[{"0", "\[Rule]", "\"\<Index\>\""}], "}"}]}]}], "]"}]}], 
+       "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"joinMechanism", "[", 
+      RowBox[{"temp1", ",", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"#", "+", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"spacing", "-", "displacement", "-", 
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{"4", "/", "3"}], ")"}], "*", "spacing"}]}], ",", 
+            RowBox[{
+             RowBox[{"-", "height"}], "*", "2"}]}], "}"}]}], "&"}], "/@", 
+        RowBox[{"flipFlop", "[", 
+         RowBox[{
+          RowBox[{"height", "*", "2"}], ",", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"2", "/", "3"}], ")"}], "*", "spacing"}]}], "]"}]}]}], 
+      "]"}]}]}], "\[IndentingNewLine]", "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.7906066877131968`*^9, 3.7906070078844433`*^9}, {
+   3.7906071379934*^9, 3.7906071403043737`*^9}, {3.790607282830393*^9, 
+   3.790607283075742*^9}, {3.790607328469392*^9, 3.790607446087111*^9}, {
+   3.790608080781927*^9, 3.790608081186514*^9}, {3.794318052469316*^9, 
+   3.79431805373057*^9}, 3.7943189807023573`*^9},
+ CellLabel->"In[10]:=",ExpressionUUID->"012295f4-4d1b-4c4c-a026-76585989b3b1"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"joinFlipFlopBL", "[", 
+   RowBox[{
+   "chain_", ",", "height_", ",", "spacing_", ",", "displacement_", ",", 
+    "length_"}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", "temp1", "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"temp1", "=", 
+      RowBox[{"joinMechanism", "[", 
+       RowBox[{"chain", ",", 
+        RowBox[{"framework", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"length", "*", "spacing"}], "-", "displacement"}], ",",
+               "0"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"length", "*", "spacing"}], "+", 
+               RowBox[{"-", "displacement"}], "+", 
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"2", "/", "3"}], ")"}], "*", "spacing"}]}], ",", 
+              "0"}], "}"}]}], "}"}], ",", " ", "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{"Property", "[", 
+            RowBox[{
+             RowBox[{"rigidBar", "[", 
+              RowBox[{"{", 
+               RowBox[{"1", ",", "2"}], "}"}], "]"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"MeshCellStyle", "\[Rule]", "Red"}], " ", "}"}]}], 
+            "]"}], "}"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"MeshCellLabel", "\[Rule]", 
+           RowBox[{"{", 
+            RowBox[{"0", "\[Rule]", "\"\<Index\>\""}], "}"}]}]}], "]"}]}], 
+       "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"joinMechanism", "[", 
+      RowBox[{"temp1", ",", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"#", "+", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"spacing", "*", "length"}], "-", "displacement", "+", 
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{"2", "/", "3"}], ")"}], "*", "spacing"}]}], ",", "0"}],
+            "}"}]}], "&"}], "/@", 
+        RowBox[{"flipFlop", "[", 
+         RowBox[{
+          RowBox[{"height", "*", "2"}], ",", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"2", "/", "3"}], ")"}], "*", "spacing"}]}], "]"}]}]}], 
+      "]"}]}]}], "\[IndentingNewLine]", "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.7906066877131968`*^9, 3.7906070078844433`*^9}, {
+   3.7906071379934*^9, 3.7906071403043737`*^9}, {3.790607282830393*^9, 
+   3.790607283075742*^9}, {3.7906081141315117`*^9, 3.79060815832839*^9}, {
+   3.790615862009057*^9, 3.790615878189*^9}, {3.790707367011096*^9, 
+   3.790707388416896*^9}, 3.790707442795754*^9, {3.794318056676197*^9, 
+   3.7943180580347757`*^9}, 3.794318796957137*^9, {3.7943188776690598`*^9, 
+   3.794318886869423*^9}},
+ CellLabel->"In[11]:=",ExpressionUUID->"cebcdc1b-31d5-4672-a26e-78bcd24b58ad"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"joinFlipFlopBR", "[", 
+   RowBox[{
+   "chain_", ",", "height_", ",", "spacing_", ",", "displacement_", ",", 
+    "length_"}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", "temp1", "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"temp1", "=", 
+      RowBox[{"joinMechanism", "[", 
+       RowBox[{"chain", ",", 
+        RowBox[{"framework", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"spacing", "-", "displacement"}], ",", "0"}], "}"}], 
+            ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"spacing", "-", "displacement", "-", 
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"2", "/", "3"}], ")"}], "*", "spacing"}]}], ",", 
+              "0"}], "}"}]}], "}"}], ",", " ", "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{"Property", "[", 
+            RowBox[{
+             RowBox[{"rigidBar", "[", 
+              RowBox[{"{", 
+               RowBox[{"1", ",", "2"}], "}"}], "]"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"MeshCellStyle", "\[Rule]", "Red"}], " ", "}"}]}], 
+            "]"}], "}"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"MeshCellLabel", "\[Rule]", 
+           RowBox[{"{", 
+            RowBox[{"0", "\[Rule]", "\"\<Index\>\""}], "}"}]}]}], "]"}]}], 
+       "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"joinMechanism", "[", 
+      RowBox[{"temp1", ",", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"#", "+", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"spacing", "-", "displacement", "-", 
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{"4", "/", "3"}], ")"}], "*", "spacing"}]}], ",", "0"}],
+            "}"}]}], "&"}], "/@", 
+        RowBox[{"flipFlop", "[", 
+         RowBox[{
+          RowBox[{"height", "*", "2"}], ",", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"2", "/", "3"}], ")"}], "*", "spacing"}]}], "]"}]}]}], 
+      "]"}]}]}], "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.7906066877131968`*^9, 3.7906070078844433`*^9}, {
+   3.7906071379934*^9, 3.7906071403043737`*^9}, {3.790607282830393*^9, 
+   3.790607283075742*^9}, {3.790608123523391*^9, 3.7906081245614777`*^9}, {
+   3.790608186430544*^9, 3.790608191466942*^9}, 3.790707421498361*^9, {
+   3.794318061308263*^9, 3.794318062634718*^9}, {3.7943181392138033`*^9, 
+   3.794318181434911*^9}, 3.794318652763831*^9, 3.794319115206217*^9},
+ CellLabel->"In[12]:=",ExpressionUUID->"4a892210-e18a-4d0b-9067-4edbf13ea2fc"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["testing", "Section",
+ CellChangeTimes->{{3.794316426197095*^9, 
+  3.794316426894361*^9}},ExpressionUUID->"68fbea9c-0d1e-4e20-8563-\
+64f6a1f19ea0"],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.794319327503392*^9, 3.794319328996991*^9}},
+ CellLabel->"In[13]:=",ExpressionUUID->"8a213fd0-ed02-4483-aca5-4627ae180b65"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"verticalUnitCell", "[", 
+   RowBox[{"height_", ",", "spacing_", ",", "displacement_"}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"tempAngle", ",", "tempUnitCell"}], "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"tempUnitCell", "=", 
+      RowBox[{"framework", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "height"}], ",", "0"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", "displacement"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"height", ",", "0"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", 
+            RowBox[{"displacement", "+", "spacing"}]}], "}"}]}], "}"}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Property", "[", 
+           RowBox[{
+            RowBox[{"spring", "[", 
+             RowBox[{"{", 
+              RowBox[{"1", ",", "2"}], "}"}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"\"\<stiffness\>\"", "\[Rule]", "beamStiffness"}], ",", 
+              
+              RowBox[{"MeshCellStyle", "\[Rule]", "Black"}]}], "}"}]}], "]"}],
+           ",", "\[IndentingNewLine]", 
+          RowBox[{"Property", "[", 
+           RowBox[{
+            RowBox[{"spring", "[", 
+             RowBox[{"{", 
+              RowBox[{"2", ",", "3"}], "}"}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"\"\<stiffness\>\"", "\[Rule]", "beamStiffness"}], ",", 
+              
+              RowBox[{"MeshCellStyle", "\[Rule]", "Black"}]}], "}"}]}], "]"}],
+           ",", "\[IndentingNewLine]", 
+          RowBox[{"Property", "[", 
+           RowBox[{
+            RowBox[{"spring", "[", 
+             RowBox[{"{", 
+              RowBox[{"2", ",", "4"}], "}"}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"\"\<stiffness\>\"", "\[Rule]", "springStiffness"}], 
+              ",", 
+              RowBox[{"MeshCellStyle", "\[Rule]", "Blue"}]}], "}"}]}], "]"}], 
+          ",", "\[IndentingNewLine]", 
+          RowBox[{"joint", "[", "1", "]"}], ",", 
+          RowBox[{"joint", "[", "3", "]"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"Property", "[", 
+           RowBox[{
+            RowBox[{"angleJoint", "[", 
+             RowBox[{"{", 
+              RowBox[{"1", ",", "2", ",", "3"}], "}"}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{
+              "\"\<angularStiffness\>\"", "\[Rule]", "torsionalStiffness"}], 
+              ",", 
+              RowBox[{"\"\<angle\>\"", "\[Rule]", "restingAngle"}]}], "}"}]}],
+            "]"}]}], "}"}], ",", "\[IndentingNewLine]", 
+        RowBox[{"MeshCellLabel", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{"0", "\[Rule]", "\"\<Index\>\""}], "}"}]}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"tempAngle", "=", 
+      RowBox[{"First", "[", 
+       RowBox[{"turningAngle", "[", 
+        RowBox[{
+         RowBox[{"mechanismPositions", "[", "tempUnitCell", "]"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"{", 
+           RowBox[{"1", ",", "2", ",", "3"}], "}"}], "}"}]}], "]"}], "]"}]}], 
+     ";", "\[IndentingNewLine]", 
+     RowBox[{"tempUnitCell", "/.", " ", 
+      RowBox[{"restingAngle", "\[Rule]", "tempAngle"}]}]}]}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"verticalUnitCell", "[", 
+  RowBox[{"1", ",", "1", ",", 
+   RowBox[{"1", "/", "4"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.794911354432033*^9, 3.794911368092997*^9}, {
+  3.7949114198384447`*^9, 3.7949114405895844`*^9}},
+ CellLabel->"In[19]:=",ExpressionUUID->"87ec54bd-5c3d-45be-a31e-7bcaad930664"],
+
+Cell[BoxData[
+ GraphicsBox[
+  TagBox[
+   DynamicModuleBox[{Typeset`mesh = {
+    MeshRegion, {Properties -> {{0, 1} -> (MeshCellStyle -> {
+           GrayLevel[0.5], 
+           PointSize[
+            Scaled[0.02]]}), {0, 3} -> (MeshCellStyle -> {
+           GrayLevel[0.5], 
+           PointSize[
+            Scaled[0.02]]}), {0, Default} -> (MeshCellStyle -> Automatic), {1,
+          1} -> (MeshCellStyle -> Directive[
+           GrayLevel[0.5], 
+           GrayLevel[0]]), {1, 2} -> (MeshCellStyle -> Directive[
+           GrayLevel[0.5], 
+           GrayLevel[0]]), {1, 3} -> (MeshCellStyle -> Directive[
+           GrayLevel[0.5], 
+           RGBColor[0, 0, 1]]), {1, Default} -> (MeshCellStyle -> 
+         Automatic), {0, Default} -> (MeshCellLabel -> "Index")}, 
+      Method -> {"CoplanarityTolerance" -> 100}}}}, 
+    TagBox[GraphicsComplexBox[{{-1., 0.}, {0., 0.25}, {1., 0.}, {0., 1.25}}, 
+      {Hue[0.6, 0.3, 0.75], 
+       TagBox[LineBox[{{1, 2}, {2, 3}, {2, 4}}],
+        Annotation[#, "Geometry"]& ], PointBox[{1, 2, 3, 4}], {
+        {GrayLevel[0], LineBox[{{1, 2}, {2, 3}}]}, 
+        {RGBColor[0, 0, 1], LineBox[{{2, 4}}]}}, {{
+         {GrayLevel[0.5], PointSize[0.02], PointBox[{1}]}, 
+         InsetBox["1", Offset[{2, 2}, {-1., 0.}], ImageScaled[{0, 0}],
+          BaseStyle->"Graphics"]}, {PointBox[{2}], 
+         InsetBox["2", Offset[{2, 2}, {0., 0.25}], ImageScaled[{0, 0}],
+          BaseStyle->"Graphics"]}, {
+         {GrayLevel[0.5], PointSize[0.02], PointBox[{3}]}, 
+         InsetBox["3", Offset[{2, 2}, {1., 0.}], ImageScaled[{0, 0}],
+          BaseStyle->"Graphics"]}, {PointBox[{4}], 
+         InsetBox["4", Offset[{2, 2}, {0., 1.25}], ImageScaled[{0, 0}],
+          BaseStyle->"Graphics"]}}}],
+     MouseAppearanceTag["LinkHand"]],
+    AllowKernelInitialization->False],
+   "MeshGraphics",
+   AutoDelete->True,
+   Editable->False,
+   Selectable->False],
+  DefaultBaseStyle->{
+   "MeshGraphics", FrontEnd`GraphicsHighlightColor -> 
+    Hue[0.1, 1, 0.7]}]], "Output",
+ CellChangeTimes->{{3.794911370569723*^9, 3.794911404506793*^9}, 
+   3.794911441010343*^9},
+ CellLabel->"Out[20]=",ExpressionUUID->"1a84d747-40b9-4b25-98d0-2842c92e4287"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"verticalChain", "[", 
+   RowBox[{"height_", ",", "spacing_", ",", "displacement_", ",", "length_"}],
+    "]"}], ":=", 
+  RowBox[{"deleteVertices", "[", 
+   RowBox[{
+    RowBox[{"tesselateMechanism", "[", 
+     RowBox[{
+      RowBox[{"verticalUnitCell", "[", 
+       RowBox[{"height", ",", "spacing", ",", "displacement"}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "spacing"}], "}"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"1", ",", "length"}], "}"}]}], "\[IndentingNewLine]", "]"}], 
+    ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"3", "length"}], "+", "1"}], "}"}]}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"verticalChain", "[", 
+  RowBox[{"2", ",", "2", ",", 
+   RowBox[{"1", "/", "4"}], ",", "3"}], "]"}]}], "Input",
+ CellChangeTimes->{{3.794911453916325*^9, 3.794911462713744*^9}},
+ CellLabel->"In[21]:=",ExpressionUUID->"43af907e-69cf-45ed-bcc9-9dcf36cc1f0b"],
+
+Cell[BoxData[
+ GraphicsBox[
+  TagBox[
+   DynamicModuleBox[{Typeset`mesh = {
+    MeshRegion, {Properties -> {{0, 1} -> (MeshCellStyle -> {
+           GrayLevel[0.5], 
+           PointSize[
+            Scaled[0.02]]}), {0, 3} -> (MeshCellStyle -> {
+           GrayLevel[0.5], 
+           PointSize[
+            Scaled[0.02]]}), {0, 5} -> (MeshCellStyle -> {
+           GrayLevel[0.5], 
+           PointSize[
+            Scaled[0.02]]}), {0, 6} -> (MeshCellStyle -> {
+           GrayLevel[0.5], 
+           PointSize[
+            Scaled[0.02]]}), {0, 8} -> (MeshCellStyle -> {
+           GrayLevel[0.5], 
+           PointSize[
+            Scaled[0.02]]}), {0, 9} -> (MeshCellStyle -> {
+           GrayLevel[0.5], 
+           PointSize[
+            Scaled[0.02]]}), {0, Default} -> (MeshCellStyle -> Automatic), {1,
+          1} -> (MeshCellStyle -> Directive[
+           GrayLevel[0.5], 
+           GrayLevel[0]]), {1, 2} -> (MeshCellStyle -> Directive[
+           GrayLevel[0.5], 
+           GrayLevel[0]]), {1, 3} -> (MeshCellStyle -> Directive[
+           GrayLevel[0.5], 
+           RGBColor[0, 0, 1]]), {1, 4} -> (MeshCellStyle -> Directive[
+           GrayLevel[0.5], 
+           GrayLevel[0]]), {1, 5} -> (MeshCellStyle -> Directive[
+           GrayLevel[0.5], 
+           GrayLevel[0]]), {1, 6} -> (MeshCellStyle -> Directive[
+           GrayLevel[0.5], 
+           RGBColor[0, 0, 1]]), {1, 7} -> (MeshCellStyle -> Directive[
+           GrayLevel[0.5], 
+           GrayLevel[0]]), {1, 8} -> (MeshCellStyle -> Directive[
+           GrayLevel[0.5], 
+           GrayLevel[0]]), {1, Default} -> (MeshCellStyle -> Automatic), {0, 
+         1} -> (MeshCellLabel -> "Index"), {0, 2} -> (MeshCellLabel -> 
+         "Index"), {0, 3} -> (MeshCellLabel -> "Index"), {0, 4} -> (
+         MeshCellLabel -> "Index"), {0, 5} -> (MeshCellLabel -> "Index"), {0, 
+         6} -> (MeshCellLabel -> "Index"), {0, 7} -> (MeshCellLabel -> 
+         "Index"), {0, 8} -> (MeshCellLabel -> "Index"), {0, 9} -> (
+         MeshCellLabel -> "Index"), {0, Default} -> (MeshCellLabel -> 
+         Automatic)}, Method -> {"CoplanarityTolerance" -> 100}}}}, 
+    TagBox[
+     GraphicsComplexBox[{{-2., 2.}, {0., 2.25}, {2., 2.}, {0., 4.25}, {-2., 
+      4.}, {2., 4.}, {0., 6.25}, {-2., 6.}, {2., 6.}}, 
+      {Hue[0.6, 0.3, 0.75], 
+       TagBox[
+        LineBox[{{1, 2}, {2, 3}, {2, 4}, {5, 4}, {4, 6}, {4, 7}, {8, 7}, {7, 
+         9}}],
+        Annotation[#, "Geometry"]& ], 
+       PointBox[{1, 2, 3, 4, 5, 6, 7, 8, 9}], {
+        {GrayLevel[0], 
+         LineBox[{{1, 2}, {2, 3}, {5, 4}, {4, 6}, {8, 7}, {7, 9}}]}, 
+        {RGBColor[0, 0, 1], LineBox[{{2, 4}, {4, 7}}]}}, {{
+         {GrayLevel[0.5], PointSize[0.02], PointBox[{1}]}, 
+         InsetBox["1", Offset[{2, 2}, {-2., 2.}], ImageScaled[{0, 0}],
+          BaseStyle->"Graphics"]}, {PointBox[{2}], 
+         InsetBox["2", Offset[{2, 2}, {0., 2.25}], ImageScaled[{0, 0}],
+          BaseStyle->"Graphics"]}, {
+         {GrayLevel[0.5], PointSize[0.02], PointBox[{3}]}, 
+         InsetBox["3", Offset[{2, 2}, {2., 2.}], ImageScaled[{0, 0}],
+          BaseStyle->"Graphics"]}, {PointBox[{4}], 
+         InsetBox["4", Offset[{2, 2}, {0., 4.25}], ImageScaled[{0, 0}],
+          BaseStyle->"Graphics"]}, {
+         {GrayLevel[0.5], PointSize[0.02], PointBox[{5}]}, 
+         InsetBox["5", Offset[{2, 2}, {-2., 4.}], ImageScaled[{0, 0}],
+          BaseStyle->"Graphics"]}, {
+         {GrayLevel[0.5], PointSize[0.02], PointBox[{6}]}, 
+         InsetBox["6", Offset[{2, 2}, {2., 4.}], ImageScaled[{0, 0}],
+          BaseStyle->"Graphics"]}, {PointBox[{7}], 
+         InsetBox["7", Offset[{2, 2}, {0., 6.25}], ImageScaled[{0, 0}],
+          BaseStyle->"Graphics"]}, {
+         {GrayLevel[0.5], PointSize[0.02], PointBox[{8}]}, 
+         InsetBox["8", Offset[{2, 2}, {-2., 6.}], ImageScaled[{0, 0}],
+          BaseStyle->"Graphics"]}, {
+         {GrayLevel[0.5], PointSize[0.02], PointBox[{9}]}, 
+         InsetBox["9", Offset[{2, 2}, {2., 6.}], ImageScaled[{0, 0}],
+          BaseStyle->"Graphics"]}}}],
+     MouseAppearanceTag["LinkHand"]],
+    AllowKernelInitialization->False],
+   "MeshGraphics",
+   AutoDelete->True,
+   Editable->False,
+   Selectable->False],
+  DefaultBaseStyle->{
+   "MeshGraphics", FrontEnd`GraphicsHighlightColor -> 
+    Hue[0.1, 1, 0.7]}]], "Output",
+ CellChangeTimes->{3.794911463235669*^9},
+ CellLabel->"Out[22]=",ExpressionUUID->"00e7c0d7-b3a1-4eb3-a79d-d315a499545d"]
+}, Open  ]]
+}, Open  ]]
+},
+AutoGeneratedPackage->None,
+WindowSize->{960, 1035},
+WindowMargins->{{Automatic, -960}, {0, Automatic}},
+FrontEndVersion->"12.0 for Mac OS X x86 (64-bit) (April 8, 2019)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 207, 3, 30, "Input",ExpressionUUID->"42925612-75e8-4605-b3cf-8c7d55cd53b8"],
+Cell[790, 27, 397, 7, 24, "Print",ExpressionUUID->"c8296f2c-a96f-4112-8888-ae13048ccfe2"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1224, 39, 165, 3, 67, "Section",ExpressionUUID->"c8f8ce76-2512-4ce3-a210-0f9bafef1087"],
+Cell[CellGroupData[{
+Cell[1414, 46, 164, 3, 54, "Subsection",ExpressionUUID->"673a6995-ee5d-4fba-a6e9-b8574d94681a"],
+Cell[1581, 51, 4054, 100, 236, "Input",ExpressionUUID->"91af1a37-2eba-4b07-8bcf-b120dcccc641",
+ InitializationCell->True],
+Cell[5638, 153, 2169, 58, 173, "Input",ExpressionUUID->"e4d141c9-9dc0-429a-b5a8-aea9b019f09a",
+ InitializationCell->True],
+Cell[7810, 213, 1086, 27, 110, "Input",ExpressionUUID->"355ac7cd-ca54-46cb-aca5-86a124a23501",
+ InitializationCell->True],
+Cell[8899, 242, 1067, 27, 89, "Input",ExpressionUUID->"8104518c-54ef-4212-921f-a969ee86aeeb",
+ InitializationCell->True],
+Cell[9969, 271, 5171, 141, 404, "Input",ExpressionUUID->"0ee1f869-498a-4c36-b445-553f66e62ad7",
+ InitializationCell->True],
+Cell[15143, 414, 3564, 92, 236, "Input",ExpressionUUID->"a0e39270-502f-4b3f-adc6-01931989a511",
+ InitializationCell->True],
+Cell[18710, 508, 1081, 29, 131, "Input",ExpressionUUID->"be86f023-732d-4cff-8bdc-ec93820dc9de",
+ InitializationCell->True]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[19828, 542, 167, 3, 54, "Subsection",ExpressionUUID->"afa5d830-e36d-498a-8611-c2ceb257fd9a"],
+Cell[19998, 547, 567, 15, 68, "Input",ExpressionUUID->"5b6751b5-c420-4292-b25a-49555594198c",
+ InitializationCell->True],
+Cell[20568, 564, 3924, 106, 278, "Input",ExpressionUUID->"95dc440e-2ee8-44ad-9c96-a5b73c313705",
+ InitializationCell->True],
+Cell[24495, 672, 2680, 69, 194, "Input",ExpressionUUID->"36b5f5cb-fdf4-4ae6-b677-0e1cc5b9c7cd",
+ InitializationCell->True],
+Cell[27178, 743, 2656, 67, 194, "Input",ExpressionUUID->"012295f4-4d1b-4c4c-a026-76585989b3b1",
+ InitializationCell->True],
+Cell[29837, 812, 2878, 72, 194, "Input",ExpressionUUID->"cebcdc1b-31d5-4672-a26e-78bcd24b58ad",
+ InitializationCell->True],
+Cell[32718, 886, 2675, 67, 173, "Input",ExpressionUUID->"4a892210-e18a-4d0b-9067-4edbf13ea2fc",
+ InitializationCell->True]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[35442, 959, 152, 3, 67, "Section",ExpressionUUID->"68fbea9c-0d1e-4e20-8563-64f6a1f19ea0"],
+Cell[35597, 964, 171, 2, 30, "Input",ExpressionUUID->"8a213fd0-ed02-4483-aca5-4627ae180b65"],
+Cell[CellGroupData[{
+Cell[35793, 970, 3806, 96, 241, "Input",ExpressionUUID->"87ec54bd-5c3d-45be-a31e-7bcaad930664"],
+Cell[39602, 1068, 2174, 47, 255, "Output",ExpressionUUID->"1a84d747-40b9-4b25-98d0-2842c92e4287"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[41813, 1120, 1054, 28, 115, "Input",ExpressionUUID->"43af907e-69cf-45ed-bcc9-9dcf36cc1f0b"],
+Cell[42870, 1150, 4425, 93, 405, "Output",ExpressionUUID->"00e7c0d7-b3a1-4eb3-a79d-d315a499545d"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
